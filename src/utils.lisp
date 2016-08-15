@@ -52,15 +52,15 @@
 
 (defun object-names-in-hand (side)
   (let* ((objects-in-hand
-           (lazy-mapcar (lambda (bdgs)
-                          (with-vars-bound (?o) bdgs
-                            (current-desig ?o)))
-                        (prolog:prolog `(cram-plan-occasions-events:object-in-hand
-                                       ?o ?side))))
+           (cut:lazy-mapcar (lambda (bdgs)
+                              (cut:with-vars-bound (?o) bdgs
+                                    (desig:current-desig ?o)))
+                            (prolog:prolog `(cram-plan-occasions-events:object-in-hand
+                                               ?o ,side))))
         (object-names-in-hand
-          (force-ll
-            (lazy-mapcar (lambda (object)
-                           (string-upcase (desig-prop-value object :name)))
-                         objects-in-hand))))
+          (cut:force-ll
+                (cut:lazy-mapcar (lambda (object)
+                                   (string-upcase (desig:desig-prop-value object :name)))
+                                 objects-in-hand))))
     object-names-in-hand))
 

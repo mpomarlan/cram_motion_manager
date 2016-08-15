@@ -28,6 +28,9 @@
 
 (in-package :mot-man)
 
+(cut:define-hook cram-language::on-prepare-move-arm (side pose-stamped planning-group ignore-collisions))
+(cut:define-hook cram-language::on-finish-move-arm (log-id success))
+
 (defclass arm-goal-specification ()
   ((side
      :initform nil
@@ -103,7 +106,7 @@
     (make-instance 'arm-goal-specification
                    :side side
                    :arm-link arm-link
-                   poses poses)))
+                   :poses poses)))
 
 (defmethod initialize-instance :after ((goal-spec manipulation-goal-specification) &key)
   (let* ((proper-arm-pose-goals (mapcar (lambda (arm-goal)
@@ -211,7 +214,7 @@
     (setf (arm-pose-goals goal-spec)
           gs-pose-goals)))
 
-(defun enriched-goal-specification (goal-specification &keys keys arm-pose-goals)
+(defun enriched-goal-specification (goal-specification &key keys arm-pose-goals)
   (let* ((new-goal-specification (copy-goal-specification goal-specification)))
     (add-goal-spec-keys new-goal-specification keys)
     (add-goal-spec-arm-goals new-goal-specification arm-pose-goals)
@@ -224,14 +227,17 @@
   (:documentation "Convenience function to make a goal-spec."))
 
 (defmethod make-goal-specification ((type t) &rest args)
+  (declare (ignore args))
   (cpl-impl:fail 'cram-plan-failures:manipulation-failed
                  :format-control "Manipulation failed: requested creation of unrecognized goal-spec type."))
 
 (defmethod execute-arm-action ((goal-specification t))
+  (declare (ignore goal-specification))
   (cpl-impl:fail 'cram-plan-failures:manipulation-failed
                  :format-control "Manipulation failed: motion-manager received something that is not a goal-spec."))
 
 (defmethod execute-arm-action ((goal-specification manipulation-goal-specification))
+  (declare (ignore goal-specification))
   (cpl-impl:fail 'cram-plan-failures:manipulation-failed
                  :format-control "Manipulation failed: motion-manager received a generic goal-spec; make sure you have motion generators (e.g. moveit or giskard) loaded, and send an appropriate goal-spec."))
 

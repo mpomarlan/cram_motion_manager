@@ -29,7 +29,7 @@
 (in-package :mot-man)
 
 (defclass ik-check-goal-specification (manipulation-goal-specification)
-  (()))
+  ())
 
 (defmethod make-goal-specification ((type (eql :ik-check-goal-specification)) &rest args)
   (apply #'make-instance (cons 'ik-check-goal-specification args)))
@@ -57,6 +57,7 @@
 
 (defun combine-ik-checker-results (results arm-goals)
   ;; TODO: mpomarlan: might be nicer to know which pose, for which arm, fails
+  (declare (ignore arm-goals))
   (let* ((all-ok (and (mapcar #'all-ok results)))
          (error-object nil)
          (error-message (if all-ok nil "One of the poses is out of reach.")))

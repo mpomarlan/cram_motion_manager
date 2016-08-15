@@ -29,7 +29,7 @@
 
 (defpackage cram-motion-manager
   (:nicknames :mot-man)
-  (:use #:common-lisp #:cram-plan-failures #:cram-language #:prolog #:cut #cram-moveit)
+  (:use #:common-lisp)
   (:export
     ;; Types
     #:manipulation-goal-specification
@@ -37,12 +37,18 @@
     #:ik-check-goal-specification
     ;; Accessors
     #:all-ok
-    #:trajectory
+    #:trajectories
     #:error-object
     #:error-message
     ;; Generics
     #:make-goal-specification
     #:execute-arm-action
     ;; Update goal-specs
-    #:enriched-goal-specification))
+    #:enriched-goal-specification
+    ;; Utils for querying arm knowledge
+    #:eef-link-name
+    #:planning-group-name
+    #:arm-link-names
+    #:hand-link-names
+    #:object-names-in-hand))
 
