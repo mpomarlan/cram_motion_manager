@@ -125,7 +125,7 @@
      :documentation "A convenience boolean flag to test if the manipulation goal succeeded.")
    (trajectories
      :initform nil
-     :initarg trajectories
+     :initarg :trajectories
      :reader trajectories
      :documentation "A list of trajectory objects.")
    (error-object

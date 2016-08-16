@@ -30,25 +30,25 @@
 
 (defun eef-link-name (side)
   (cut:var-value '?link
-                 (first (prolog:prolog `(and (robot ?robot)
-                                             (end-effector-link ?robot ,side ?link))))))
+                 (first (prolog:prolog `(and (cram-robot-interfaces:robot ?robot)
+                                             (cram-robot-interfaces:end-effector-link ?robot ,side ?link))))))
 
 (defun planning-group-name (side)
   (cut:var-value '?group
-                 (first (prolog:prolog `(and (robot ?robot)
-                                             (planning-group ?robot ,side ?group))))))
+                 (first (prolog:prolog `(and (cram-robot-interfaces:robot ?robot)
+                                             (cram-robot-interfaces:planning-group ?robot ,side ?group))))))
 
 (defun arm-link-names (side)
   (cut:var-value '?links
                  (first (prolog:prolog
-                          `(and (robot ?robot)
-                                (arm-links ?robot ,side ?links))))))
+                          `(and (cram-robot-interfaces:robot ?robot)
+                                (cram-robot-interfaces:arm-links ?robot ,side ?links))))))
 
 (defun hand-link-names (side)
   (cut:var-value '?links
                  (first (prolog:prolog
-                          `(and (robot ?robot)
-                                (hand-links ?robot ,side ?links))))))
+                          `(and (cram-robot-interfaces:robot ?robot)
+                                (cram-robot-interfaces:hand-links ?robot ,side ?links))))))
 
 (defun object-names-in-hand (side)
   (let* ((objects-in-hand
