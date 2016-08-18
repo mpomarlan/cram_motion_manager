@@ -42,6 +42,7 @@
     #:error-message
     ;; Generics
     #:make-goal-specification
+    #:make-fallback-converter
     #:execute-arm-action
     ;; Update goal-specs
     #:enriched-goal-specification

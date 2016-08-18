@@ -226,6 +226,17 @@
 (defgeneric make-goal-specification (type &rest args)
   (:documentation "Convenience function to make a goal-spec."))
 
+(defgeneric make-fallback-converter (type)
+  (:documentation "Convenience function to make a function object representing a fallback converter: takes a goal-spec and converts its type to TYPE."))
+
+(defmethod make-fallback-converter ((type t))
+  (cpl-impl:fail 'cram-plan-failures:manipulation-failed
+                 :format-control "Manipulation failed: requested creation of unrecognized fallback-converter type"))
+
+(defmethod make-fallback-converter ((type (eql :manipulation-goal-specification)))
+  (cpl-impl:fail 'cram-plan-failures:manipulation-failed
+                 :format-control "Manipulation failed: requested creation of generic fallback-converter to MANIPULATION-GOAL-SPECIFICATION is not allowed."))
+
 (defmethod make-goal-specification ((type t) &rest args)
   (declare (ignore args))
   (cpl-impl:fail 'cram-plan-failures:manipulation-failed
